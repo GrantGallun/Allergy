@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="container">
+    <div class="col"></div>
+    <div class="col-6">
+  <h1>{% block title %}Recipe Name{% endblock %}</h1>
+    </div>
+  <div class="col"></div>
+  </div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col"></div>
+    <div class="col-6">
+  <form method="post">
+    <label class="form-label" for="user_recipe">Search recipe</label>
+    <input class="form-control" name="user_recipe" id="user_recipe" value="{{ request.form['user_recipe'] }}">
+    <br><br>
+    <label for="allergies">Select allergens to avoid</label><br>
+    {% for allergy in default_allergens: %}
+    <input class="form-check-input" type="checkbox" id="{{allergy}}" name="allergylist", value="{{allergy}}">
+    <label class="form-check-label" for="{{allergy}}">{{allergy}}</label>
+    {% endfor %}
+    <!--<select name="allergies" multiple size="5" >
+        <option value="dairy">Dairy</option>
+        <option value="egg">Eggs</option>
+        <option value="wheat">Wheat</option>
+        <option value="nuts">Nuts</option>
+        <option value="soy">Soy</option>
+    </select>-->
+    <br><br>
+    <label class="form-label" for="Other_allergies">Other Allergies (separate with spaces)</label>
+    <input class="form-control" type="Other_allergies" name="other_allergies" id="Other_allergies" value="{{ request.form['other_allergies'] }}">
+    <br>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+<br>
+
+  {% if user_recipe == "": %}
+  <!--Do nothing-->
+ {% else %}
+   <p>Your recipe request is {{ user_recipe }}</p>
+   <p>Your allergies are
+    {% for allergy in allergies: %}
+        {{ allergy }}
+    {% endfor %}
+     {{ other_allergies }}</p>
+     <br><br>
+     <h1>Recipe Results</h1><br><br>
+     <p>{{ response }}</p>
+  {% endif %}
+  <br><br>
+
+</div>
+<div class="col"></div>
+</div>
+{% endblock %}
